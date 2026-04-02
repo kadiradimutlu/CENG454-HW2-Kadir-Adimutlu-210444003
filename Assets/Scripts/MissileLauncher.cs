@@ -12,9 +12,14 @@ public class MissileLauncher : MonoBehaviour
         if (missilePrefab != null && launchPoint != null)
         {
             activeMissile = Instantiate(missilePrefab, launchPoint.position, launchPoint.rotation);
-            Debug.Log("Threat System: Missile Launched!");
+            Debug.Log("Threat System: Missile launched.");
             
-            // Homing script assignment will be added in Day 4
+            MissileHoming homingComponent = activeMissile.GetComponent<MissileHoming>();
+            if (homingComponent != null)
+            {
+                homingComponent.SetTarget(target);
+            }
+            
             return activeMissile;
         }
         return null;
