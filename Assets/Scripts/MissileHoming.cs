@@ -5,6 +5,7 @@ public class MissileHoming : MonoBehaviour
     [SerializeField] private float speed = 25f;
     [SerializeField] private float rotationSpeed = 15f;
     [SerializeField] private float detonationDistance = 3f; 
+    [SerializeField] private AudioClip explosionClip;
 
     private Transform target;
     private bool isDestroyed = false;
@@ -51,6 +52,25 @@ public class MissileHoming : MonoBehaviour
     {
         isDestroyed = true;
         Debug.Log("Threat System: Missile collided with player. Aircraft destroyed.");
+        
+        // Stop warning and launch audios to prevent overlapping with the explosion
+        FlightExamManager examManager = FindObjectOfType<FlightExamManager>();
+        if (examManager != null)
+        {
+            examManager.StopWarningAudio();
+        }
+
+        MissileLauncher launcher = FindObjectOfType<MissileLauncher>();
+        if (launcher != null)
+        {
+            launcher.StopLaunchAudio();
+        }
+
+        if (explosionClip != null)
+        {
+            AudioSource.PlayClipAtPoint(explosionClip, transform.position);
+        }
+
         Destroy(gameObject);
     }
 }
