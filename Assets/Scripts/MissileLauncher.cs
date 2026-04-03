@@ -4,6 +4,8 @@ public class MissileLauncher : MonoBehaviour
 {
     [SerializeField] private GameObject missilePrefab;
     [SerializeField] private Transform launchPoint;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip launchClip;
     
     private GameObject activeMissile;
 
@@ -13,6 +15,12 @@ public class MissileLauncher : MonoBehaviour
         {
             activeMissile = Instantiate(missilePrefab, launchPoint.position, launchPoint.rotation);
             Debug.Log("Threat System: Missile launched.");
+            
+            // Trigger the launch audio playback
+            if (audioSource != null && launchClip != null)
+            {
+                audioSource.PlayOneShot(launchClip);
+            }
             
             MissileHoming homingComponent = activeMissile.GetComponent<MissileHoming>();
             if (homingComponent != null)
