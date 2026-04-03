@@ -34,7 +34,13 @@ public class FlightExamManager : MonoBehaviour
 
         if (audioSource != null && warningClip != null)
         {
-            audioSource.PlayOneShot(warningClip);
+            audioSource.clip = warningClip;
+            audioSource.loop = true;
+            
+            if (!audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
         }
     }
 
@@ -42,5 +48,15 @@ public class FlightExamManager : MonoBehaviour
     {
         if (statusText != null) statusText.text = ""; 
         threatCleared = true;
+        
+        StopWarningAudio();
+    }
+
+    public void StopWarningAudio()
+    {
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
     }
 }
