@@ -19,7 +19,8 @@ public class MissileLauncher : MonoBehaviour
             // Trigger the launch audio playback
             if (audioSource != null && launchClip != null)
             {
-                audioSource.PlayOneShot(launchClip);
+                audioSource.clip = launchClip;
+                audioSource.Play();
             }
             
             MissileHoming homingComponent = activeMissile.GetComponent<MissileHoming>();
@@ -39,6 +40,14 @@ public class MissileLauncher : MonoBehaviour
         {
             Destroy(activeMissile);
             Debug.Log("Threat System: Active missile destroyed.");
+        }
+    }
+
+    public void StopLaunchAudio()
+    {
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
         }
     }
 }
