@@ -5,6 +5,7 @@ public class MissileHoming : MonoBehaviour
     [SerializeField] private float speed = 25f;
     [SerializeField] private float rotationSpeed = 15f;
     [SerializeField] private float detonationDistance = 3f; 
+    [SerializeField] private AudioClip explosionClip;
 
     private Transform target;
     private bool isDestroyed = false;
@@ -51,6 +52,12 @@ public class MissileHoming : MonoBehaviour
     {
         isDestroyed = true;
         Debug.Log("Threat System: Missile collided with player. Aircraft destroyed.");
+        
+        if (explosionClip != null)
+        {
+            AudioSource.PlayClipAtPoint(explosionClip, transform.position);
+        }
+
         Destroy(gameObject);
     }
 }
