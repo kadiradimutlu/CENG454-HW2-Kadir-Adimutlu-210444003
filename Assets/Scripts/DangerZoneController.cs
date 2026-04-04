@@ -5,7 +5,7 @@ public class DangerZoneController : MonoBehaviour
 {
     [SerializeField] private FlightExamManager examManager;
     [SerializeField] private MissileLauncher missileLauncher;
-    [SerializeField] private float missileDelay = 5f;
+    [SerializeField] private float missileDelay = 9f;
 
     private Coroutine activeCountdown;
 
