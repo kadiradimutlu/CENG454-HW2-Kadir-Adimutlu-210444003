@@ -26,6 +26,8 @@ public class FlightExamManager : MonoBehaviour
 
     public void EnterDangerZone()
     {
+        if (missionComplete) return;
+
         if (statusText != null)
         {
             statusText.text = "Entered a Dangerous Zone!";
@@ -46,6 +48,8 @@ public class FlightExamManager : MonoBehaviour
 
     public void ExitDangerZone()
     {
+        if (missionComplete) return;
+
         if (statusText != null) statusText.text = ""; 
         threatCleared = true;
         
@@ -57,6 +61,33 @@ public class FlightExamManager : MonoBehaviour
         if (audioSource != null && audioSource.isPlaying)
         {
             audioSource.Stop();
+        }
+    }
+
+    public void ReportLanding()
+    {
+        if (missionComplete) return;
+
+        missionComplete = true;
+        StopWarningAudio(); 
+
+        if (hasTakenOff && threatCleared)
+        {
+            if (statusText != null)
+            {
+                statusText.text = "Mission Accomplished!";
+                statusText.color = Color.green;
+            }
+            Debug.Log("Mission State: Success. Aircraft landed safely after clearing the threat.");
+        }
+        else
+        {
+            if (statusText != null)
+            {
+                statusText.text = "Mission Failed!";
+                statusText.color = Color.red;
+            }
+            Debug.Log("Mission State: Failed. Invalid landing or threat not cleared.");
         }
     }
 }
