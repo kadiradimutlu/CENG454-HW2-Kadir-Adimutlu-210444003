@@ -383,7 +383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DangerZoneController
   examManager: {fileID: 916194714}
   missileLauncher: {fileID: 554245750}
-  missileDelay: 9
+  missileDelay: 5
 --- !u!1 &178623109
 GameObject:
   m_ObjectHideFlags: 0
@@ -3387,7 +3387,7 @@ MonoBehaviour:
   pitchSpeed: 45
   yawSpeed: 45
   rollSpeed: 45
-  thrustSpeed: 5
+  thrustSpeed: 7
   gravityForce: 0.6
   engineAudio: {fileID: 1960612595}
   engineClip: {fileID: 8300000, guid: 35836ef2560edbe44851a657a4fb2b79, type: 3}

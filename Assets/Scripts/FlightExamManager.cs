@@ -130,7 +130,6 @@ public class FlightExamManager : MonoBehaviour
         Debug.Log("Mission State: Failed. Aircraft crashed into terrain.");
     }
 
-    // YENİ EKLENEN FONKSİYON: Füze vurulma durumu
     public void ReportMissileHit()
     {
         if (missionComplete) return;

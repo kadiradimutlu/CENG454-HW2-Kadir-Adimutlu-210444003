@@ -9,7 +9,7 @@ public class DangerZoneController : MonoBehaviour
 {
     [SerializeField] private FlightExamManager examManager;
     [SerializeField] private MissileLauncher missileLauncher;
-    [SerializeField] private float missileDelay = 9f;
+    [SerializeField] private float missileDelay = 5f;
 
     private Coroutine activeCountdown;
 
@@ -48,7 +48,7 @@ public class DangerZoneController : MonoBehaviour
 
     private IEnumerator LaunchCountdown(Transform targetTransform)
     {
-        Debug.Log("Threat System: Missile launch countdown started (9 seconds)...");
+        Debug.Log("Threat System: Missile launch countdown started (5 seconds)...");
         yield return new WaitForSeconds(missileDelay);
         
         if (missileLauncher != null)
