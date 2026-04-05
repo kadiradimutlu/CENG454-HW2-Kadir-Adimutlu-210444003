@@ -10,6 +10,7 @@ public class FlightExamManager : MonoBehaviour
     private bool hasTakenOff = false;
     private bool threatCleared = false;
     private bool missionComplete = false;
+    private bool isOutOfBounds = false;
 
     public bool HasTakenOff() => hasTakenOff;
     public bool IsThreatCleared() => threatCleared;
@@ -28,7 +29,7 @@ public class FlightExamManager : MonoBehaviour
     {
         if (missionComplete) return;
 
-        if (statusText != null)
+        if (statusText != null && !isOutOfBounds)
         {
             statusText.text = "Entered a Dangerous Zone!";
             statusText.color = Color.red;
@@ -50,7 +51,7 @@ public class FlightExamManager : MonoBehaviour
     {
         if (missionComplete) return;
 
-        if (statusText != null) statusText.text = ""; 
+        if (statusText != null && !isOutOfBounds) statusText.text = ""; 
         threatCleared = true;
         
         StopWarningAudio();
@@ -88,6 +89,44 @@ public class FlightExamManager : MonoBehaviour
                 statusText.color = Color.red;
             }
             Debug.Log("Mission State: Failed. Invalid landing or threat not cleared.");
+        }
+    }
+
+    public void ReportCrash()
+    {
+        if (missionComplete) return;
+
+        missionComplete = true;
+        StopWarningAudio();
+
+        if (statusText != null)
+        {
+            statusText.text = "Aircraft Crashed! Mission Failed.";
+            statusText.color = Color.red;
+        }
+        Debug.Log("Mission State: Failed. Aircraft crashed into terrain.");
+    }
+
+    public void ShowBoundaryWarning()
+    {
+        if (missionComplete) return;
+        
+        isOutOfBounds = true;
+        if (statusText != null)
+        {
+            statusText.text = "WARNING: Return to Mission Area!";
+            statusText.color = new Color(1f, 0.5f, 0f); 
+        }
+    }
+
+    public void HideBoundaryWarning()
+    {
+        if (missionComplete) return;
+        
+        isOutOfBounds = false;
+        if (statusText != null)
+        {
+            statusText.text = ""; 
         }
     }
 }
