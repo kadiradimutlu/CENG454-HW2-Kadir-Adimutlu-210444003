@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class FlightExamManager : MonoBehaviour
 {
@@ -12,6 +13,23 @@ public class FlightExamManager : MonoBehaviour
     private bool missionComplete = false;
     private bool isOutOfBounds = false;
 
+    private void Start()
+    {
+        if (statusText != null)
+        {
+            statusText.text = "MISSION: Take off, evade the threat, and land safely.\nHold [SPACE] to thrust.";
+            statusText.color = Color.white;
+        }
+    }
+
+    private void Update()
+    {
+        if (missionComplete && Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
     public bool HasTakenOff() => hasTakenOff;
     public bool IsThreatCleared() => threatCleared;
     public bool IsMissionComplete() => missionComplete;
@@ -21,6 +39,7 @@ public class FlightExamManager : MonoBehaviour
         if (!hasTakenOff)
         {
             hasTakenOff = true;
+            if (statusText != null && !isOutOfBounds) statusText.text = ""; 
             Debug.Log("Mission State: Takeoff reported.");
         }
     }
@@ -76,7 +95,7 @@ public class FlightExamManager : MonoBehaviour
         {
             if (statusText != null)
             {
-                statusText.text = "Mission Accomplished!";
+                statusText.text = "Mission Accomplished!\nPress 'R' to Restart";
                 statusText.color = Color.green;
             }
             Debug.Log("Mission State: Success. Aircraft landed safely after clearing the threat.");
@@ -85,7 +104,7 @@ public class FlightExamManager : MonoBehaviour
         {
             if (statusText != null)
             {
-                statusText.text = "Mission Failed!";
+                statusText.text = "Mission Failed!\nPress 'R' to Restart";
                 statusText.color = Color.red;
             }
             Debug.Log("Mission State: Failed. Invalid landing or threat not cleared.");
@@ -101,7 +120,7 @@ public class FlightExamManager : MonoBehaviour
 
         if (statusText != null)
         {
-            statusText.text = "Aircraft Crashed! Mission Failed.";
+            statusText.text = "Aircraft Crashed! Mission Failed.\nPress 'R' to Restart";
             statusText.color = Color.red;
         }
         Debug.Log("Mission State: Failed. Aircraft crashed into terrain.");
@@ -126,7 +145,17 @@ public class FlightExamManager : MonoBehaviour
         isOutOfBounds = false;
         if (statusText != null)
         {
-            statusText.text = ""; 
+            if (!hasTakenOff)
+            {
+                // Kalkış yapılmadıysa başlangıç talimatını ekranda tut
+                statusText.text = "MISSION: Take off, evade the threat, and land safely.\nHold [SPACE] to thrust.";
+                statusText.color = Color.white;
+            }
+            else
+            {
+                // Kalkış yapıldıysa ve alana geri dönüldüyse yazıyı temizle
+                statusText.text = ""; 
+            }
         }
     }
 }
