@@ -147,13 +147,11 @@ public class FlightExamManager : MonoBehaviour
         {
             if (!hasTakenOff)
             {
-                // Kalkış yapılmadıysa başlangıç talimatını ekranda tut
-                statusText.text = "MISSION: Take off, evade the threat, and land safely.\nHold [SPACE] to thrust.";
+                statusText.text = "MISSION: Take off, evade the threat and land safely.\nHold [SPACE] to thrust.";
                 statusText.color = Color.white;
             }
             else
             {
-                // Kalkış yapıldıysa ve alana geri dönüldüyse yazıyı temizle
                 statusText.text = ""; 
             }
         }
