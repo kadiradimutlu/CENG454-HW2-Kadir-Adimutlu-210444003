@@ -9,7 +9,7 @@ public class FlightController : MonoBehaviour
     [SerializeField] private float pitchSpeed = 45f;
     [SerializeField] private float yawSpeed = 45f;
     [SerializeField] private float rollSpeed = 45f;
-    [SerializeField] private float thrustSpeed = 5f;
+    [SerializeField] private float thrustSpeed = 7f;
     [SerializeField] private float gravityForce = 0.6f;
 
     [Header("Audio Settings")]
@@ -19,12 +19,12 @@ public class FlightController : MonoBehaviour
     [SerializeField] private float thrustPitch = 1.2f;
 
     private Rigidbody rb;
-    private FlightExamManager examManager; // Yeni eklenen referans
+    private FlightExamManager examManager;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        examManager = FindObjectOfType<FlightExamManager>(); // Yöneticiyi bul
+        examManager = FindObjectOfType<FlightExamManager>();
 
         if (rb != null)
         {
@@ -42,14 +42,13 @@ public class FlightController : MonoBehaviour
 
     void Update()
     {
-        // YENİ EKLENEN KONTROL: Görev bittiyse uçağı tamamen dondur ve sesi kes
         if (examManager != null && examManager.IsMissionComplete())
         {
             if (engineAudio != null && engineAudio.isPlaying)
             {
                 engineAudio.Stop();
             }
-            return; // Alt kısımdaki uçuş ve yerçekimi kodlarının çalışmasını engeller
+            return;
         }
 
         HandleRotation();

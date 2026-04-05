@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a1772eabec9ea943a42a7f5eb762578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MissileHoming
-  speed: 10
+  speed: 8
   rotationSpeed: 20
   detonationDistance: 0.5
   explosionClip: {fileID: 8300000, guid: f348747f9a0278c46986a2c4d16ea6a8, type: 3}
