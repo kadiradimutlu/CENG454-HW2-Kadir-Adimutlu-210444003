@@ -1,3 +1,7 @@
+// AircraftCollision.cs
+// CENG 454 - HW2 Midterm: Sky-High Prototype II
+// Author: Kadir ADIMUTLU | Student ID: 210444003
+
 using UnityEngine;
 
 public class AircraftCollision : MonoBehaviour
