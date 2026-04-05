@@ -10,45 +10,62 @@ public class FlightController : MonoBehaviour
     [SerializeField] private float yawSpeed = 45f;
     [SerializeField] private float rollSpeed = 45f;
     [SerializeField] private float thrustSpeed = 5f;
+    [SerializeField] private float gravityForce = 0.6f;
+
+    [Header("Audio Settings")]
+    [SerializeField] private AudioSource engineAudio;
+    [SerializeField] private AudioClip engineClip;
+    [SerializeField] private float idlePitch = 0.8f;
+    [SerializeField] private float thrustPitch = 1.2f;
 
     private Rigidbody rb;
 
     void Start()
     {
-        // Cache the Rigidbody component for performance
         rb = GetComponent<Rigidbody>();
 
         if (rb != null)
         {
-            // Lock physics rotation to prevent the engine from fighting our custom flight logic
             rb.freezeRotation = true;
+            rb.useGravity = false; 
             Debug.Log("FlightController: Physics initialized and rotation locked.");
         }
         else
         {
             Debug.LogError("FlightController: Rigidbody missing on the aircraft!");
         }
+
+        InitializeAudio();
     }
 
     void Update()
     {
         HandleRotation();
         HandleThrust();
+        ApplyCustomGravity();
+    }
+
+    private void InitializeAudio()
+    {
+        if (engineAudio != null && engineClip != null)
+        {
+            engineAudio.clip = engineClip;
+            engineAudio.loop = true;
+            engineAudio.pitch = idlePitch;
+            engineAudio.Play();
+        }
     }
 
     private void HandleRotation()
     {
-        // 1. Pitch: Vertical axis for nose up/down
         float pitchInput = Input.GetAxis("Vertical");
         float pitchAmount = pitchInput * pitchSpeed * Time.deltaTime;
         transform.Rotate(Vector3.right, pitchAmount);
 
-        // 2. Yaw: Horizontal axis for steering left/right
         float yawInput = Input.GetAxis("Horizontal");
         float yawAmount = yawInput * yawSpeed * Time.deltaTime;
         transform.Rotate(Vector3.up, yawAmount);
 
-        // 3. Roll: Q and E keys for banking
         float rollInput = 0f;
         if (Input.GetKey(KeyCode.Q)) rollInput = 1f;
         else if (Input.GetKey(KeyCode.E)) rollInput = -1f;
@@ -59,12 +76,27 @@ public class FlightController : MonoBehaviour
 
     private void HandleThrust()
     {
-        // Thrust control via Spacebar
         if (Input.GetKey(KeyCode.Space))
         {
-            // Move forward along the local Z axis
             float thrustAmount = thrustSpeed * Time.deltaTime;
             transform.Translate(Vector3.forward * thrustAmount);
+
+            if (engineAudio != null)
+            {
+                engineAudio.pitch = Mathf.Lerp(engineAudio.pitch, thrustPitch, Time.deltaTime * 2f);
+            }
         }
+        else
+        {
+            if (engineAudio != null)
+            {
+                engineAudio.pitch = Mathf.Lerp(engineAudio.pitch, idlePitch, Time.deltaTime * 2f);
+            }
+        }
+    }
+
+    private void ApplyCustomGravity()
+    {
+        transform.Translate(Vector3.down * gravityForce * Time.deltaTime, Space.World);
     }
 }
