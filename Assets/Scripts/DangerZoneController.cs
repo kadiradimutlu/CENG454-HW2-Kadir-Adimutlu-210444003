@@ -44,7 +44,7 @@ public class DangerZoneController : MonoBehaviour
 
     private IEnumerator LaunchCountdown(Transform targetTransform)
     {
-        Debug.Log("Threat System: Missile launch countdown started (5 seconds)...");
+        Debug.Log("Threat System: Missile launch countdown started (9 seconds)...");
         yield return new WaitForSeconds(missileDelay);
         
         if (missileLauncher != null)

@@ -53,11 +53,11 @@ public class MissileHoming : MonoBehaviour
         isDestroyed = true;
         Debug.Log("Threat System: Missile collided with player. Aircraft destroyed.");
         
-        // Stop warning and launch audios to prevent overlapping with the explosion
         FlightExamManager examManager = FindObjectOfType<FlightExamManager>();
         if (examManager != null)
         {
             examManager.StopWarningAudio();
+            examManager.ReportMissileHit(); // YENİ EKLENEN KOD: Oyunu kaybetme durumunu tetikler
         }
 
         MissileLauncher launcher = FindObjectOfType<MissileLauncher>();

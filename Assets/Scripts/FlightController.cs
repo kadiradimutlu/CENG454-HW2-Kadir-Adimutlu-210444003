@@ -19,10 +19,12 @@ public class FlightController : MonoBehaviour
     [SerializeField] private float thrustPitch = 1.2f;
 
     private Rigidbody rb;
+    private FlightExamManager examManager; // Yeni eklenen referans
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        examManager = FindObjectOfType<FlightExamManager>(); // Yöneticiyi bul
 
         if (rb != null)
         {
@@ -40,6 +42,16 @@ public class FlightController : MonoBehaviour
 
     void Update()
     {
+        // YENİ EKLENEN KONTROL: Görev bittiyse uçağı tamamen dondur ve sesi kes
+        if (examManager != null && examManager.IsMissionComplete())
+        {
+            if (engineAudio != null && engineAudio.isPlaying)
+            {
+                engineAudio.Stop();
+            }
+            return; // Alt kısımdaki uçuş ve yerçekimi kodlarının çalışmasını engeller
+        }
+
         HandleRotation();
         HandleThrust();
         ApplyCustomGravity();
