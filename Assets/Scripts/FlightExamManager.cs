@@ -11,6 +11,7 @@ public class FlightExamManager : MonoBehaviour
     [SerializeField] private TMP_Text statusText;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip warningClip;
+    [SerializeField] private AudioSource victoryAudioSource;
     
     private bool hasTakenOff = false;
     private bool threatCleared = false;
@@ -103,6 +104,12 @@ public class FlightExamManager : MonoBehaviour
                 statusText.color = Color.green;
             }
             Debug.Log("Mission State: Success. Aircraft landed safely after clearing the threat.");
+
+            // ZAFER SESİ BURADA ÇALIYOR
+            if (victoryAudioSource != null && !victoryAudioSource.isPlaying)
+            {
+                victoryAudioSource.Play();
+            }
         }
         else
         {
