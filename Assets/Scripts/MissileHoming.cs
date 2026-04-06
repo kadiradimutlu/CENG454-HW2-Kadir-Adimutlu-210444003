@@ -8,7 +8,7 @@ public class MissileHoming : MonoBehaviour
 {
     [SerializeField] private float speed = 11f;
     [SerializeField] private float rotationSpeed = 3.5f;
-    [SerializeField] private float detonationDistance = 0.15f; 
+    [SerializeField] private float detonationDistance = 0.4f; 
     [SerializeField] private AudioClip explosionClip;
 
     private Transform target;
