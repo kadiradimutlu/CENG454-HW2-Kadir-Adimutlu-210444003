@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class MissileHoming : MonoBehaviour
 {
-    [SerializeField] private float speed = 8f;
-    [SerializeField] private float rotationSpeed = 15f;
-    [SerializeField] private float detonationDistance = 3f; 
+    [SerializeField] private float speed = 11f;
+    [SerializeField] private float rotationSpeed = 3.5f;
+    [SerializeField] private float detonationDistance = 0.15f; 
     [SerializeField] private AudioClip explosionClip;
 
     private Transform target;
